@@ -283,6 +283,7 @@ export default {
                   chart.setOption(option);
                   // 下钻到县
                   chart.on("click", function(params) {
+                    // console.log(params.name); 县的名字
                     for (let i = 0; i < resData.data.length; i++) {
                       if (params.name === resData.data[i].name) {
                         that.$router.push({
