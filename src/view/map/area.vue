@@ -3,7 +3,7 @@
     @contextmenu.prevent="backProvince"
     class="animated pulse"
     id="map"
-    style="height:600px;width:1800px;border:0;"
+    style="height: 600px; width: 1800px; border: 0"
   ></div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
       cityName: "",
       areaName: "",
       geoCoordMap: {},
-      AreaId: 0
+      AreaId: 0,
     };
   },
   mounted() {
@@ -43,7 +43,7 @@ export default {
         道孚县: 1.6,
         炉霍县: 1.7,
         色达县: 1.8,
-        理塘县: 1.9
+        理塘县: 1.9,
       },
       凉山彝族自治州: {
         木里藏族自治县: 0.1,
@@ -62,7 +62,7 @@ export default {
         甘洛县: 1.4,
         美姑县: 1.5,
         雷波县: 1.6,
-        金阳县: 1.7
+        金阳县: 1.7,
       },
       阿坝藏族羌族自治州: {
         壤塘县: 0.1,
@@ -78,7 +78,7 @@ export default {
         小金县: 1.1,
         金川县: 1.2,
         马尔康: 1.3,
-        茂县: 1.4
+        茂县: 1.4,
       },
       绵阳市: {
         平武县: 0.1,
@@ -89,7 +89,7 @@ export default {
         游仙区: 0.6,
         梓潼县: 0.7,
         三台县: 0.8,
-        盐亭县: 0.9
+        盐亭县: 0.9,
       },
       广元市: {
         青川县: 0.1,
@@ -98,14 +98,14 @@ export default {
         旺苍县: 0.4,
         昭化区: 0.5,
         剑阁县: 0.6,
-        苍溪县: 0.7
+        苍溪县: 0.7,
       },
       巴中市: {
         巴州区: 0.1,
         恩阳区: 0.2,
         南江县: 0.3,
         通江县: 0.4,
-        平昌县: 0.5
+        平昌县: 0.5,
       },
       达州市: {
         渠县: 0.1,
@@ -114,7 +114,7 @@ export default {
         开江县: 0.4,
         通川区: 0.5,
         宣汉县: 0.6,
-        万源市: 0.7
+        万源市: 0.7,
       },
       南充市: {
         阆中市: 0.1,
@@ -125,7 +125,7 @@ export default {
         顺庆区: 0.6,
         蓬安县: 0.7,
         高坪区: 0.8,
-        嘉陵区: 0.9
+        嘉陵区: 0.9,
       },
       德阳市: {
         绵竹市: 0.1,
@@ -133,14 +133,14 @@ export default {
         罗江区: 0.3,
         旌阳区: 0.4,
         广汉市: 0.5,
-        中江县: 0.6
+        中江县: 0.6,
       },
       遂宁市: {
         射洪市: 0.1,
         蓬溪县: 0.2,
         船山区: 0.3,
         大英县: 0.4,
-        安居区: 0.5
+        安居区: 0.5,
       },
       广安市: 6,
       成都市: 10,
@@ -157,24 +157,24 @@ export default {
         仁和区: 0.2,
         西区: 0.3,
         东区: 0.4,
-        米易县: 0.5
-      }
+        米易县: 0.5,
+      },
     };
     let that = this;
     this.axios
       .get(
         `/map/${this.cityName}/${mapList[this.cityName][this.areaName]}.json`
       )
-      .then(res => {
+      .then((res) => {
         u_map.setCsenter(res.data);
         this.axios
           .post(
             "https://hd.wykjhwj.com/index.php/home/Api/cou_dates",
             qs.stringify({
-              id: that.AreaId
+              id: that.AreaId,
             })
           )
-          .then(resData => {
+          .then((resData) => {
             // 地标数据
             that.geoCoordMap = u_map.setCenter(res.data);
             // 传递地表数据和姓名
@@ -183,7 +183,7 @@ export default {
             let option = {
               tooltip: {
                 trigger: "item",
-                formatter: function(params) {
+                formatter: function (params) {
                   return (
                     params.name +
                     "<br>" +
@@ -222,7 +222,7 @@ export default {
                     params.data.data.stores +
                     "个"
                   );
-                }
+                },
               },
               geo: {
                 name: "SC PopEstimates",
@@ -234,29 +234,29 @@ export default {
                   normal: {
                     show: true, // 默认地图文字字号和字体颜色
                     fontSize: 14,
-                    color: "#CFCFCF"
+                    color: "#CFCFCF",
                   },
                   emphasis: {
                     show: true,
                     fontSize: 14, // 选中地图文字字号和字体颜色
-                    color: "#CFCFCF"
-                  }
+                    color: "#CFCFCF",
+                  },
                 },
                 itemStyle: {
                   normal: {
                     areaColor: "#000606", //地图本身的颜色
                     borderColor: "#7E8080", //省份边框颜色
                     borderWidth: 1, // 省份边框宽度
-                    opacity: 1 //图形透明度
+                    opacity: 1, //图形透明度
                   },
                   emphasis: {
                     areaColor: "#CD2B29", // 高亮时候地图显示的颜色
-                    borderWidth: 0 // 高亮时的边框宽度
-                  }
+                    borderWidth: 0, // 高亮时的边框宽度
+                  },
                 },
                 textFixed: {
-                  Alaska: [20, -20]
-                }
+                  Alaska: [20, -20],
+                },
                 // regions: u_map.setColor()
               },
               series: [
@@ -267,24 +267,24 @@ export default {
                   symbolSize: 12,
                   label: {
                     normal: {
-                      show: false
+                      show: false,
                     },
                     emphasis: {
-                      show: false
-                    }
+                      show: false,
+                    },
                   },
                   itemStyle: {
                     normal: {
                       shadowBlur: 10,
-                      color: "#00ECC8"
+                      color: "#00ECC8",
                     },
                     emphasis: {
                       borderColor: "#fff",
-                      borderWidth: 1
-                    }
-                  }
-                }
-              ]
+                      borderWidth: 1,
+                    },
+                  },
+                },
+              ],
             };
             chart.setOption(option);
           });
@@ -295,9 +295,19 @@ export default {
     backProvince() {
       let that = this;
       let city = this.cityName;
+      that.axios
+        .post(
+          "https://hd.wykjhwj.com/index.php/Home/Api/online",
+          qs.stringify({
+            name: that.cityName,
+          })
+        )
+        .then((res) => {
+          console.log(res.data);
+        });
       this.$router.push({
         path: "/index/city",
-        query: { name: that.cityName }
+        query: { name: that.cityName },
       });
     },
     initFunction() {
@@ -321,7 +331,7 @@ export default {
           道孚县: 1.6,
           炉霍县: 1.7,
           色达县: 1.8,
-          理塘县: 1.9
+          理塘县: 1.9,
         },
         凉山彝族自治州: {
           木里藏族自治县: 0.1,
@@ -340,7 +350,7 @@ export default {
           甘洛县: 1.4,
           美姑县: 1.5,
           雷波县: 1.6,
-          金阳县: 1.7
+          金阳县: 1.7,
         },
         阿坝藏族羌族自治州: {
           壤塘县: 0.1,
@@ -356,7 +366,7 @@ export default {
           小金县: 1.1,
           金川县: 1.2,
           马尔康: 1.3,
-          茂县: 1.4
+          茂县: 1.4,
         },
         绵阳市: {
           平武县: 0.1,
@@ -367,7 +377,7 @@ export default {
           游仙区: 0.6,
           梓潼县: 0.7,
           三台县: 0.8,
-          盐亭县: 0.9
+          盐亭县: 0.9,
         },
         广元市: {
           青川县: 0.1,
@@ -376,14 +386,14 @@ export default {
           旺苍县: 0.4,
           昭化区: 0.5,
           剑阁县: 0.6,
-          苍溪县: 0.7
+          苍溪县: 0.7,
         },
         巴中市: {
           巴州区: 0.1,
           恩阳区: 0.2,
           南江县: 0.3,
           通江县: 0.4,
-          平昌县: 0.5
+          平昌县: 0.5,
         },
         达州市: {
           渠县: 0.1,
@@ -392,7 +402,7 @@ export default {
           开江县: 0.4,
           通川区: 0.5,
           宣汉县: 0.6,
-          万源市: 0.7
+          万源市: 0.7,
         },
         南充市: {
           阆中市: 0.1,
@@ -403,7 +413,7 @@ export default {
           顺庆区: 0.6,
           蓬安县: 0.7,
           高坪区: 0.8,
-          嘉陵区: 0.9
+          嘉陵区: 0.9,
         },
         德阳市: {
           绵竹市: 0.1,
@@ -411,14 +421,14 @@ export default {
           罗江区: 0.3,
           旌阳区: 0.4,
           广汉市: 0.5,
-          中江县: 0.6
+          中江县: 0.6,
         },
         遂宁市: {
           射洪市: 0.1,
           蓬溪县: 0.2,
           船山区: 0.3,
           大英县: 0.4,
-          安居区: 0.5
+          安居区: 0.5,
         },
         广安市: 6,
         成都市: 10,
@@ -435,24 +445,24 @@ export default {
           仁和区: 0.2,
           西区: 0.3,
           东区: 0.4,
-          米易县: 0.5
-        }
+          米易县: 0.5,
+        },
       };
       let that = this;
       this.axios
         .get(
           `/map/${this.cityName}/${mapList[this.cityName][this.areaName]}.json`
         )
-        .then(res => {
+        .then((res) => {
           that.echarts.registerMap("MY", JSON.stringify(res.data));
           let chart = this.echarts.init(document.getElementById("map"));
           let option = {
             tooltip: {
               trigger: "item",
-              formatter: function(params) {
+              formatter: function (params) {
                 return params.name + " : " + params.value;
               },
-              extraCssText: "height:20px;"
+              extraCssText: "height:20px;",
             },
             series: [
               {
@@ -465,66 +475,66 @@ export default {
                   normal: {
                     show: true, // 默认地图文字字号和字体颜色
                     fontSize: 12,
-                    color: "#CFCFCF"
+                    color: "#CFCFCF",
                   },
                   emphasis: {
                     show: true,
                     fontSize: 12, // 选中地图文字字号和字体颜色
-                    color: "#CFCFCF"
-                  }
+                    color: "#CFCFCF",
+                  },
                 },
                 itemStyle: {
                   normal: {
                     areaColor: "#000606", //地图本身的颜色
                     borderColor: "#7E8080", //省份边框颜色
                     borderWidth: 1, // 省份边框宽度
-                    opacity: 1 //图形透明度
+                    opacity: 1, //图形透明度
                   },
                   emphasis: {
                     areaColor: "#CD2B29", // 高亮时候地图显示的颜色
-                    borderWidth: 0 // 高亮时的边框宽度
-                  }
+                    borderWidth: 0, // 高亮时的边框宽度
+                  },
                 },
                 textFixed: {
-                  Alaska: [20, -20]
+                  Alaska: [20, -20],
                 },
                 data: [
                   {
                     name: "涪城区",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#CD2B29", label: { show: false } }
-                    }
+                      normal: { areaColor: "#CD2B29", label: { show: false } },
+                    },
                   },
                   { name: "广元市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "巴中市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#500808", label: { show: false } }
-                    }
+                      normal: { areaColor: "#500808", label: { show: false } },
+                    },
                   },
                   {
                     name: "南充市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#690909", label: { show: false } }
-                    }
+                      normal: { areaColor: "#690909", label: { show: false } },
+                    },
                   },
                   { name: "广安市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "达州市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#1E080A", label: { show: false } }
-                    }
+                      normal: { areaColor: "#1E080A", label: { show: false } },
+                    },
                   },
                   {
                     name: "遂宁市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#1D0708", label: { show: false } }
-                    }
+                      normal: { areaColor: "#1D0708", label: { show: false } },
+                    },
                   },
                   { name: "资阳市", value: Math.round(Math.random() * 2000) },
                   { name: "内江市", value: Math.round(Math.random() * 2000) },
@@ -534,49 +544,49 @@ export default {
                   { name: "乐山市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "凉山彝族自治州",
-                    value: Math.round(Math.random() * 2000)
+                    value: Math.round(Math.random() * 2000),
                   },
                   { name: "攀枝花市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "甘孜藏族自治州",
-                    value: Math.round(Math.random() * 2000)
+                    value: Math.round(Math.random() * 2000),
                   },
                   {
                     name: "阿坝藏族羌族自治州",
-                    value: Math.round(Math.random() * 2000)
+                    value: Math.round(Math.random() * 2000),
                   },
                   { name: "雅安市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "眉山市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#261012", label: { show: false } }
-                    }
+                      normal: { areaColor: "#261012", label: { show: false } },
+                    },
                   },
                   { name: "成都市", value: Math.round(Math.random() * 2000) },
                   {
                     name: "德阳市",
                     value: Math.round(Math.random() * 2000),
                     itemStyle: {
-                      normal: { areaColor: "#500808", label: { show: false } }
-                    }
-                  }
-                ]
-              }
-            ]
+                      normal: { areaColor: "#500808", label: { show: false } },
+                    },
+                  },
+                ],
+              },
+            ],
           };
 
           chart.setOption(option);
         });
-    }
+    },
   },
   watch: {
-    areaNaee: function(value) {
+    areaNaee: function (value) {
       this.cityName = value[0];
       this.areaName = value[1];
       this.initFunction();
-    }
-  }
+    },
+  },
 };
 </script>
 

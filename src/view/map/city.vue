@@ -3,7 +3,7 @@
     @contextmenu.prevent="backProvince"
     class="animated pulse"
     id="map"
-    style="height:700px;width:1600px;border:0;"
+    style="height: 700px; width: 1600px; border: 0"
   ></div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
       cityList: null,
       allCount: 0, // 总销量,
       RegionalDat: null, // 地区数据,
-      allTipa: null
+      allTipa: null,
     };
   },
   mounted() {
@@ -45,7 +45,7 @@ export default {
       泸州市: 17,
       宜宾市: 18,
       凉山彝族自治州: 19,
-      攀枝花市: 20
+      攀枝花市: 20,
     };
     let getMap = {
       遂宁市: 1,
@@ -53,7 +53,7 @@ export default {
       绵阳市: 3,
       广元市: 4,
       德阳市: 5,
-      巴中市: 6
+      巴中市: 6,
     };
     that.cityName = this.$route.query.name;
     this.getCityList();
@@ -62,18 +62,18 @@ export default {
       .post(
         "https://hd.wykjhwj.com/index.php/home/Api/citys",
         qs.stringify({
-          id: getMap[that.cityName.toString()]
+          id: getMap[that.cityName.toString()],
         })
       )
-      .then(function(resData) {
+      .then(function (resData) {
         that.axios
           .post(
             "https://hd.wykjhwj.com/index.php/home/Api/all_dates",
             qs.stringify({
-              country: that.cityList
+              country: that.cityList,
             })
           )
-          .then(resa => {
+          .then((resa) => {
             that.allCount = 0;
             let allSales = [];
             let count = 0;
@@ -90,7 +90,7 @@ export default {
               // 总计每个城市的销量
               allSales.push({
                 name: CityName,
-                SalesgGrade: count
+                SalesgGrade: count,
               });
               count = 0;
             }
@@ -149,171 +149,185 @@ export default {
             // 处理完后的数据
             that.RegionalDat = allSales;
             // 渲染到页面上
-            that.axios.get(`/map/${mapList[that.cityName]}.json`).then(res => {
-              // 请求名牌数据
-              that.axios
-                .post(
-                  "https://hd.wykjhwj.com/index.php/home/Api/orter_data",
-                  qs.stringify({
-                    type: "country",
-                    city: that.cityName
-                  })
-                )
-                .then(mapdata => {
-                  that.allTipa = mapdata.data;
-                  that.echarts.registerMap("MY", JSON.stringify(res.data));
-                  that.geoCoordMap = that.getCenter(res);
-                  let chart = that.echarts.init(document.getElementById("map"));
-                  let option = {
-                    tooltip: {
-                      trigger: "item",
-                      formatter: function(params) {
-                        return (
-                          params.name +
-                          "<br>" +
-                          params.marker +
-                          "化肥销量" +
-                          "：" +
-                          params.data.data.sales +
-                          "吨" +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#F40034;"></span>' +
-                          "化肥品牌" +
-                          "：" +
-                          params.data.data.Brand +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#862324;"></span>' +
-                          "耕地面积" +
-                          "：" +
-                          params.data.data.land +
-                          "平方米" +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#088170;"></span>' +
-                          "人口数量" +
-                          "：" +
-                          params.data.data.people +
-                          "人" +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#F1F3F4;"></span>' +
-                          "农民数量" +
-                          "：" +
-                          params.data.data.farmer +
-                          "人" +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#43BC86;"></span>' +
-                          "村镇数量" +
-                          "：" +
-                          params.data.data.villages +
-                          "个" +
-                          "<br>" +
-                          '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#AB7877;"></span>' +
-                          "经销商数量" +
-                          "：" +
-                          params.data.data.stores +
-                          "个"
-                        );
-                      }
-                      // extraCssText: "height:80px;"
-                    },
-                    geo: {
-                      name: "SC PopEstimates",
-                      type: "map",
-                      aspectScale: 1, // 横向拉伸
-                      map: "MY",
-                      label: {
-                        show: true,
-                        normal: {
-                          show: true, // 默认地图文字字号和字体颜色
-                          fontSize: 13,
-                          color: "#CFCFCF"
+            that.axios
+              .get(`/map/${mapList[that.cityName]}.json`)
+              .then((res) => {
+                // 请求名牌数据
+                that.axios
+                  .post(
+                    "https://hd.wykjhwj.com/index.php/home/Api/orter_data",
+                    qs.stringify({
+                      type: "country",
+                      city: that.cityName,
+                    })
+                  )
+                  .then((mapdata) => {
+                    that.allTipa = mapdata.data;
+                    that.echarts.registerMap("MY", JSON.stringify(res.data));
+                    that.geoCoordMap = that.getCenter(res);
+                    let chart = that.echarts.init(
+                      document.getElementById("map")
+                    );
+                    let option = {
+                      tooltip: {
+                        trigger: "item",
+                        formatter: function (params) {
+                          return (
+                            params.name +
+                            "<br>" +
+                            params.marker +
+                            "化肥销量" +
+                            "：" +
+                            params.data.data.sales +
+                            "吨" +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#F40034;"></span>' +
+                            "化肥品牌" +
+                            "：" +
+                            params.data.data.Brand +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#862324;"></span>' +
+                            "耕地面积" +
+                            "：" +
+                            params.data.data.land +
+                            "平方米" +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#088170;"></span>' +
+                            "人口数量" +
+                            "：" +
+                            params.data.data.people +
+                            "人" +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#F1F3F4;"></span>' +
+                            "农民数量" +
+                            "：" +
+                            params.data.data.farmer +
+                            "人" +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#43BC86;"></span>' +
+                            "村镇数量" +
+                            "：" +
+                            params.data.data.villages +
+                            "个" +
+                            "<br>" +
+                            '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#AB7877;"></span>' +
+                            "经销商数量" +
+                            "：" +
+                            params.data.data.stores +
+                            "个"
+                          );
                         },
-                        emphasis: {
-                          show: true,
-                          fontSize: 13, // 选中地图文字字号和字体颜色
-                          color: "#CFCFCF"
-                        }
+                        // extraCssText: "height:80px;"
                       },
-                      itemStyle: {
-                        normal: {
-                          areaColor: "#000606", //地图本身的颜色
-                          borderColor: "#7E8080", //省份边框颜色
-                          borderWidth: 1, // 省份边框宽度
-                          opacity: 1 //图形透明度
-                        },
-                        emphasis: {
-                          areaColor: "#CD2B29", // 高亮时候地图显示的颜色
-                          borderWidth: 0 // 高亮时的边框宽度
-                        }
-                      },
-                      textFixed: {
-                        Alaska: [20, -20]
-                      },
-                      regions: u_map.setColor(
-                        that.RegionalDat,
-                        that.RegionalData
-                      )
-                    },
-                    series: [
-                      {
-                        type: "effectScatter",
-                        coordinateSystem: "geo",
-                        data: that.converData([resData.data]),
-                        symbolSize: 12,
+                      geo: {
+                        name: "SC PopEstimates",
+                        type: "map",
+                        aspectScale: 1, // 横向拉伸
+                        map: "MY",
                         label: {
+                          show: true,
                           normal: {
-                            show: false
+                            show: true, // 默认地图文字字号和字体颜色
+                            fontSize: 13,
+                            color: "#CFCFCF",
                           },
                           emphasis: {
-                            show: false
-                          }
+                            show: true,
+                            fontSize: 13, // 选中地图文字字号和字体颜色
+                            color: "#CFCFCF",
+                          },
                         },
                         itemStyle: {
                           normal: {
-                            shadowBlur: 10,
-                            color: "#00ECC8"
+                            areaColor: "#000606", //地图本身的颜色
+                            borderColor: "#7E8080", //省份边框颜色
+                            borderWidth: 1, // 省份边框宽度
+                            opacity: 1, //图形透明度
                           },
                           emphasis: {
-                            borderColor: "#fff",
-                            borderWidth: 1
-                          }
+                            areaColor: "#CD2B29", // 高亮时候地图显示的颜色
+                            borderWidth: 0, // 高亮时的边框宽度
+                          },
+                        },
+                        textFixed: {
+                          Alaska: [20, -20],
+                        },
+                        regions: u_map.setColor(
+                          that.RegionalDat,
+                          that.RegionalData
+                        ),
+                      },
+                      series: [
+                        {
+                          type: "effectScatter",
+                          coordinateSystem: "geo",
+                          data: that.converData([resData.data]),
+                          symbolSize: 12,
+                          label: {
+                            normal: {
+                              show: false,
+                            },
+                            emphasis: {
+                              show: false,
+                            },
+                          },
+                          itemStyle: {
+                            normal: {
+                              shadowBlur: 10,
+                              color: "#00ECC8",
+                            },
+                            emphasis: {
+                              borderColor: "#fff",
+                              borderWidth: 1,
+                            },
+                          },
+                        },
+                      ],
+                    };
+                    chart.setOption(option);
+                    // 下钻到县
+                    chart.on("click", function (params) {
+                      // console.log(params.name); 县的名字
+                      for (let i = 0; i < resData.data.length; i++) {
+                        if (params.name === resData.data[i].name) {
+                          // that.axios
+                          //   .post(
+                          //     "https://hd.wykjhwj.com/index.php/Home/Api/online",
+                          //     qs.stringify({
+                          //       name: `a${params.name}`,
+                          //     })
+                          //   )
+                          //   .then((res) => {
+                          //     console.log(res.data);
+                          //   });
+                          that.$router.push({
+                            path: "/index/area",
+                            query: {
+                              name:
+                                that.cityName +
+                                "-" +
+                                params.name +
+                                "-" +
+                                resData.data[i].id,
+                            },
+                          });
                         }
                       }
-                    ]
-                  };
-                  chart.setOption(option);
-                  // 下钻到县
-                  chart.on("click", function(params) {
-                    // console.log(params.name); 县的名字
-                    for (let i = 0; i < resData.data.length; i++) {
-                      if (params.name === resData.data[i].name) {
-                        that.$router.push({
-                          path: "/index/area",
-                          query: {
-                            name:
-                              that.cityName +
-                              "-" +
-                              params.name +
-                              "-" +
-                              resData.data[i].id
-                          }
-                        });
-                      }
-                    }
+                    });
                   });
-                });
-            });
+              });
           });
       });
   },
   // 监听的勾选数据的变化
   watch: {
-    RegionalData: function(value) {
+    RegionalData: function (value) {
       this.initFunction();
     },
-    cityNmae: function(value) {
+    cityNmae: function (value) {
       this.cityName = value;
       this.initFunction();
-    }
+    },
   },
   methods: {
     // 请求数据
@@ -328,7 +342,7 @@ export default {
           "盐亭县",
           "梓潼县",
           "游仙区",
-          "江油市"
+          "江油市",
         ];
       } else if (this.cityName === "巴中市") {
         this.cityList = ["南江县", "恩阳区", "巴州区", "平昌县", "通江县"];
@@ -340,7 +354,7 @@ export default {
           "朝天区",
           "昭化区",
           "苍溪县",
-          "旺苍县"
+          "旺苍县",
         ];
       } else if (this.cityName === "德阳市") {
         this.cityList = [
@@ -349,7 +363,7 @@ export default {
           "广汉市",
           "旌阳区",
           "罗江区",
-          "中江县"
+          "中江县",
         ];
       } else if (this.cityName === "遂宁市") {
         this.cityList = ["射洪市", "大英县", "船山区", "蓬溪县", "安居区"];
@@ -363,7 +377,7 @@ export default {
           "高坪区",
           "遂安县",
           "营山县",
-          "仪陇县"
+          "仪陇县",
         ];
       }
     },
@@ -372,13 +386,23 @@ export default {
       let that = this;
       this.$emit("changePage", {
         nowPage: 0,
-        cityName: ""
+        cityName: "",
       });
+      this.axios
+        .post(
+          "https://hd.wykjhwj.com/index.php/Home/Api/online",
+          qs.stringify({
+            name: "四川省",
+          })
+        )
+        .then((res) => {
+          console.log(res.data);
+        });
       this.$router.push({
-        path: "/index/province"
+        path: "/index/province",
       });
     },
-    converData: function(city) {
+    converData: function (city) {
       let reaas = [];
       let data = city[0];
       let that = this;
@@ -399,8 +423,8 @@ export default {
                 land: that.allTipa[i].land,
                 farmer: that.allTipa[i].farmer,
                 villages: that.allTipa[i].villages,
-                people: that.allTipa[i].people
-              }
+                people: that.allTipa[i].people,
+              },
             });
           }
         }
@@ -420,15 +444,15 @@ export default {
                 land: that.allTipa[i].land,
                 farmer: that.allTipa[i].farmer,
                 villages: that.allTipa[i].villages,
-                people: that.allTipa[i].people
-              }
+                people: that.allTipa[i].people,
+              },
             });
           }
         }
       }
       return res;
     },
-    getCenter: function(mapData) {
+    getCenter: function (mapData) {
       let that = this;
       let geoMap = {};
       for (let i = 0; i < mapData.data.features.length; i++) {
@@ -440,7 +464,7 @@ export default {
       return geoMap;
     },
     // 处理地理显示层级颜色方法
-    getcolor: function(city) {
+    getcolor: function (city) {
       let data = city[0];
       let that = this;
       let center = [];
@@ -448,14 +472,14 @@ export default {
         if (data[i].name) {
           center.push({
             name: data[i].name,
-            hierarchy: 1
+            hierarchy: 1,
           });
         }
       }
       return center;
     },
     // 同级跳转时调用的函数,初始化整个页面
-    initFunction: function() {
+    initFunction: function () {
       let that = this;
       let mapList = {
         甘孜藏族自治州: 0,
@@ -478,7 +502,7 @@ export default {
         泸州市: 17,
         宜宾市: 18,
         凉山彝族自治州: 19,
-        攀枝花市: 20
+        攀枝花市: 20,
       };
       let getMap = {
         遂宁市: 1,
@@ -486,7 +510,7 @@ export default {
         绵阳市: 3,
         广元市: 4,
         德阳市: 5,
-        巴中市: 6
+        巴中市: 6,
       };
       that.cityName = this.$route.query.name;
       this.getCityList();
@@ -495,18 +519,18 @@ export default {
         .post(
           "https://hd.wykjhwj.com/index.php/home/Api/citys",
           qs.stringify({
-            id: getMap[that.cityName.toString()]
+            id: getMap[that.cityName.toString()],
           })
         )
-        .then(function(resData) {
+        .then(function (resData) {
           that.axios
             .post(
               "https://hd.wykjhwj.com/index.php/home/Api/all_dates",
               qs.stringify({
-                country: that.cityList
+                country: that.cityList,
               })
             )
-            .then(resa => {
+            .then((resa) => {
               that.allCount = 0;
               let allSales = [];
               let count = 0;
@@ -523,7 +547,7 @@ export default {
                 // 总计每个城市的销量
                 allSales.push({
                   name: CityName,
-                  SalesgGrade: count
+                  SalesgGrade: count,
                 });
                 count = 0;
               }
@@ -584,17 +608,17 @@ export default {
               // 渲染到页面上
               that.axios
                 .get(`/map/${mapList[that.cityName]}.json`)
-                .then(res => {
+                .then((res) => {
                   // 请求名牌数据
                   that.axios
                     .post(
                       "https://hd.wykjhwj.com/index.php/home/Api/orter_data",
                       qs.stringify({
                         type: "country",
-                        city: that.cityName
+                        city: that.cityName,
                       })
                     )
-                    .then(mapdata => {
+                    .then((mapdata) => {
                       that.allTipa = mapdata.data;
                       that.echarts.registerMap("MY", JSON.stringify(res.data));
                       that.geoCoordMap = that.getCenter(res);
@@ -604,7 +628,7 @@ export default {
                       let option = {
                         tooltip: {
                           trigger: "item",
-                          formatter: function(params) {
+                          formatter: function (params) {
                             return (
                               params.name +
                               "<br>" +
@@ -649,7 +673,7 @@ export default {
                               params.data.data.stores +
                               "个"
                             );
-                          }
+                          },
                           // extraCssText: "height:80px;"
                         },
                         geo: {
@@ -662,33 +686,33 @@ export default {
                             normal: {
                               show: true, // 默认地图文字字号和字体颜色
                               fontSize: 13,
-                              color: "#CFCFCF"
+                              color: "#CFCFCF",
                             },
                             emphasis: {
                               show: true,
                               fontSize: 13, // 选中地图文字字号和字体颜色
-                              color: "#CFCFCF"
-                            }
+                              color: "#CFCFCF",
+                            },
                           },
                           itemStyle: {
                             normal: {
                               areaColor: "#000606", //地图本身的颜色
                               borderColor: "#7E8080", //省份边框颜色
                               borderWidth: 1, // 省份边框宽度
-                              opacity: 1 //图形透明度
+                              opacity: 1, //图形透明度
                             },
                             emphasis: {
                               areaColor: "#CD2B29", // 高亮时候地图显示的颜色
-                              borderWidth: 0 // 高亮时的边框宽度
-                            }
+                              borderWidth: 0, // 高亮时的边框宽度
+                            },
                           },
                           textFixed: {
-                            Alaska: [20, -20]
+                            Alaska: [20, -20],
                           },
                           regions: u_map.setColor(
                             that.RegionalDat,
                             that.RegionalData
-                          )
+                          ),
                         },
                         series: [
                           {
@@ -698,30 +722,40 @@ export default {
                             symbolSize: 12,
                             label: {
                               normal: {
-                                show: false
+                                show: false,
                               },
                               emphasis: {
-                                show: false
-                              }
+                                show: false,
+                              },
                             },
                             itemStyle: {
                               normal: {
                                 shadowBlur: 10,
-                                color: "#00ECC8"
+                                color: "#00ECC8",
                               },
                               emphasis: {
                                 borderColor: "#fff",
-                                borderWidth: 1
-                              }
-                            }
-                          }
-                        ]
+                                borderWidth: 1,
+                              },
+                            },
+                          },
+                        ],
                       };
                       chart.setOption(option);
                       // 下钻到县
-                      chart.on("click", function(params) {
+                      chart.on("click", function (params) {
                         for (let i = 0; i < resData.data.length; i++) {
                           if (params.name === resData.data[i].name) {
+                            that.axios
+                              .post(
+                                "https://hd.wykjhwj.com/index.php/Home/Api/online",
+                                qs.stringify({
+                                  name: `a${params.name}`,
+                                })
+                              )
+                              .then((res) => {
+                                console.log(res.data);
+                              });
                             that.$router.push({
                               path: "/index/area",
                               query: {
@@ -730,8 +764,8 @@ export default {
                                   "-" +
                                   params.name +
                                   "-" +
-                                  resData.data[i].id
-                              }
+                                  resData.data[i].id,
+                              },
                             });
                           }
                         }
@@ -740,8 +774,8 @@ export default {
                 });
             });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
